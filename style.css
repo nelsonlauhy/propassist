@@ -1,0 +1,93 @@
+body, html {
+    height: 100%;
+    overflow: hidden; /* Prevent unnecessary scrollbars */
+}
+
+.navbar-custom {
+    background-color: #eaebec; /* Light gray background color */
+    height: 56px; /* Keep the height consistent */
+    padding: 0; /* Remove extra padding */
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+    color: black !important; /* Change default font color to black */
+}
+
+.navbar-custom .nav-link:hover {
+    color: #343a40; /* Darker shade on hover */
+}
+
+.left-section {
+    background-color: #f8f9fa;
+    height: calc(100vh - 56px); /* Full height minus navbar height */
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    position: fixed; /* Fix the left section to the side */
+    top: 56px; /* Place it below the navbar */
+    left: 0; /* Align it to the left of the viewport */
+    width: 250px; /* Set default width for the left menu */
+    transition: width 0.3s; /* Smooth transition for width change */
+}
+
+.right-section {
+    padding: 20px;
+    margin-left: 250px; /* Align with the left section width */
+    height: calc(100vh - 56px); /* Adjust height according to the left section */
+    transition: margin-left 0.3s; /* Smooth transition for margin change */
+    overflow: auto; /* Allow scrolling inside the right section */
+}
+
+.collapsed-left-section {
+    width: 60px !important;
+    transition: width 0.3s;
+}
+
+.collapsed-left-section .nav-link {
+    justify-content: flex-start; /* Align icons to the left */
+    padding: 10px 0;
+    margin-left: 10px; /* Add space on the left for collapsed icons */
+}
+
+.collapsed-left-section .nav-link span {
+    display: none; /* Hide the text labels */
+}
+
+.expanded-right-section {
+    margin-left: 60px !important;
+    transition: margin-left 0.3s;
+}
+
+.collapse-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+
+/* Custom styling for left section menu */
+.nav-link-custom {
+    color: black !important; /* Set text color to black */
+}
+
+.nav-link-custom i {
+    color: black !important; /* Set icon color to black */
+}
+
+/* Style for logo image */
+.navbar-logo {
+    max-height: 30px; /* Smaller logo size */
+    width: auto; /* Maintain aspect ratio */
+    margin-left: 10px; /* Add space to the left of the logo */
+}
+
+/* Styling for containers */
+.container-box {
+    background-color: #ffffff; /* White background */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    height: 150px; /* Fixed height */
+    margin-bottom: 20px; /* Space between containers */
+    padding: 10px; /* Inner padding */
+}

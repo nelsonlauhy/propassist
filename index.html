@@ -6,86 +6,98 @@
     <title>Two-Section Layout</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body, html {
-            height: 100%;
-        }
-        .navbar-custom {
-            background-color: #343a40;
-        }
-        .left-section {
-            background-color: #f8f9fa;
-            height: 100vh;
-            padding: 20px;
-            border-right: 1px solid #ddd;
-        }
-        .right-section {
-            padding: 20px;
-            height: 100vh;
-        }
-    </style>
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">PA</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <!-- Load Navbar -->
+    <div id="navbar-container"></div>
 
-    <!-- Two Section Layout -->
+    <!-- Load Left Menu and Right Section -->
     <div class="container-fluid">
         <div class="row">
-            <!-- Left Section (Core Menu) -->
-            <div class="col-md-2 left-section">
-                <h4>Core Menu</h4>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Profile</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Settings</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Logout</a>
-                    </li>
-                </ul>
-            </div>
+            <!-- Container for Left Section -->
+            <div id="leftmenu-container" class="col-md-2"></div>
 
             <!-- Right Section (Page Content) -->
-            <div class="col-md-10 right-section">
-                <h2>Page Content</h2>
-                <p>
-                    This is the page content area. You can replace this text with the main content of the page.
-                    Here, you can put any additional elements like forms, tables, or text.
-                </p>
+            <div id="right-section" class="col-md-10 right-section">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="container-box">Container 1</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="container-box">Container 2</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="container-box">Container 3</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="container-box">Container 4</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Bootstrap JS (required for some components like dropdowns) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load the navbar from navbar.html
+        document.addEventListener("DOMContentLoaded", function() {
+            loadComponents();
+        });
+
+        function loadComponents() {
+            // Load Navbar
+            fetch("navbar.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("navbar-container").innerHTML = data;
+                })
+                .catch(error => {
+                    console.error("Error loading navbar.html: ", error);
+                });
+
+            // Load Left Menu
+            fetch("leftmenu.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("leftmenu-container").innerHTML = data;
+                    console.log("Left menu loaded successfully.");
+                    attachCollapseHandler(); // Attach the collapse handler after loading the left menu
+                })
+                .catch(error => {
+                    console.error("Error loading leftmenu.html: ", error);
+                });
+        }
+
+        // Function to handle left section collapse
+        function attachCollapseHandler() {
+            const leftSection = document.getElementById("left-section");
+            const rightSection = document.getElementById("right-section");
+            const collapseIcon = document.getElementById("collapse-icon");
+
+            if (!leftSection || !rightSection || !collapseIcon) {
+                console.error("One of the sections or collapse icon is not found. Please check your HTML structure.");
+                return;
+            }
+
+            document.querySelector(".collapse-btn").addEventListener("click", () => {
+                leftSection.classList.toggle("collapsed-left-section");
+                rightSection.classList.toggle("expanded-right-section");
+
+                if (leftSection.classList.contains("collapsed-left-section")) {
+                    collapseIcon.classList.remove("bi-chevron-left");
+                    collapseIcon.classList.add("bi-chevron-right");
+                } else {
+                    collapseIcon.classList.remove("bi-chevron-right");
+                    collapseIcon.classList.add("bi-chevron-left");
+                }
+            });
+        }
+    </script>
 </body>
 </html>
