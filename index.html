@@ -1,6 +1,8 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ... your existing head content ... -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Two-Section Layout</title>
@@ -44,8 +46,9 @@
 
     <!-- Bootstrap JS (required for some components like dropdowns) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Your custom script -->
     <script>
-        // Load the navbar from navbar.html
+        // Load the navbar and left menu components
         document.addEventListener("DOMContentLoaded", function() {
             loadComponents();
         });
@@ -56,6 +59,8 @@
                 .then(response => response.text())
                 .then(data => {
                     document.getElementById("navbar-container").innerHTML = data;
+                    // Attach the dropdown handler after loading the navbar
+                    attachDropdownHandler();
                 })
                 .catch(error => {
                     console.error("Error loading navbar.html: ", error);
@@ -74,6 +79,24 @@
                 });
         }
 
+        // Function to handle updating the dropdown toggle text
+        function attachDropdownHandler() {
+            var dropdownItems = document.querySelectorAll('.dropdown-item');
+            var dropdownToggle = document.getElementById('fileDropdown');
+
+            if (!dropdownToggle) {
+                console.error("Dropdown toggle not found. Ensure the navbar is loaded correctly.");
+                return;
+            }
+
+            dropdownItems.forEach(function(item) {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault(); // Prevent default link behavior
+                    dropdownToggle.textContent = this.textContent; // Update the toggle text
+                });
+            });
+        }
+
         // Function to handle left section collapse
         function attachCollapseHandler() {
             const leftSection = document.getElementById("left-section");
@@ -90,14 +113,21 @@
                 rightSection.classList.toggle("expanded-right-section");
 
                 if (leftSection.classList.contains("collapsed-left-section")) {
+                    // Left section is collapsed
+                    rightSection.classList.remove("col-md-10");
+                    rightSection.classList.add("col-md-12", "adjusted-width");
                     collapseIcon.classList.remove("bi-chevron-left");
                     collapseIcon.classList.add("bi-chevron-right");
                 } else {
+                    // Left section is expanded
+                    rightSection.classList.remove("col-md-12", "adjusted-width");
+                    rightSection.classList.add("col-md-10");
                     collapseIcon.classList.remove("bi-chevron-right");
                     collapseIcon.classList.add("bi-chevron-left");
                 }
             });
         }
+
     </script>
 </body>
 </html>

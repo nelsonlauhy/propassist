@@ -91,3 +91,8 @@ body, html {
     margin-bottom: 20px; /* Space between containers */
     padding: 10px; /* Inner padding */
 }
+@media (min-width: 768px) {
+    .adjusted-width {
+        width: calc(100% - 60px);
+    }
+}
