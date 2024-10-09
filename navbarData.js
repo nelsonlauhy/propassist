@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log("Documents fetched: ", propertySnapshot.size);
 
             const propertyList = propertySnapshot.docs.map(doc => doc.data());
-            console.log("Property List:", propertyList); // Debug log to see the data structure
+            console.log("Property List:", propertyList);
 
             const dropdownList = document.getElementById("propertyDropdown");
             if (!dropdownList) {
@@ -57,13 +57,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 dropdownLink.className = "dropdown-item";
                 dropdownLink.href = "#";
                 dropdownLink.textContent = displayText;
-                dropdownItem.appendChild(dropdownLink);
 
+                // Add data-filenum attribute to store the filenum
+                dropdownLink.setAttribute('data-filenum', filenum);
+
+                dropdownItem.appendChild(dropdownLink);
                 dropdownList.appendChild(dropdownItem);
                 console.log("Dropdown item added: ", dropdownLink);
             });
 
             console.log("Dropdown list populated successfully.");
+
+            // Call attachDropdownHandler after populating the dropdown
+            attachDropdownHandler();
+
         } catch (error) {
             console.error("Error fetching property list:", error);
         }
